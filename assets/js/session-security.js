@@ -3,7 +3,7 @@ const LIMIT=10*60*1000;
 const WARN=60*1000;
 const KEY="s4u-employer-nondot-last-activity-v3";
 const MID="s4u-session-warning";
-const LOGIN="/login.html";
+const LOGIN='https://portal.screenings4u.com/';
 let last=0,warnTimer=null,logoutTimer=null,countTimer=null,signingOut=false,booted=false;
 
 const C=()=>window.PORTAL_CONFIG||{};
