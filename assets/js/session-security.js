@@ -155,6 +155,7 @@ async function boot(){
   let session=await a.getSession().catch(()=>null);
   if(!session){location.replace(LOGIN);return}
 
+  await verifyActivePortalAccess();
   document.documentElement.classList.remove('s4u-security-pending');
   document.documentElement.classList.add('s4u-session-verified');
 
@@ -177,6 +178,33 @@ async function boot(){
   });
   schedule();
 }
+
+
+// Check live server-side portal access while the session remains open.
+const ACCESS_CHECK_MS=15000;
+let accessCheckBusy=false;
+async function verifyActivePortalAccess(){
+  if(signingOut||accessCheckBusy)return;
+  accessCheckBusy=true;
+  try{
+    const session=await auth()?.getSession?.();
+    if(!session?.access_token){location.replace(LOGIN);return}
+    const cfg=C();
+    const resp=await fetch(cfg.workforceUrl+'/functions/v1/employer-nondot-access-heartbeat',{
+      method:'POST',cache:'no-store',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+session.access_token,'apikey':cfg.workforceKey},
+      body:'{}'
+    });
+    if(resp.status===401||resp.status===403){
+      const data=await resp.json().catch(()=>({}));
+      if(data?.has_access===false){clearPortalSessionCaches();location.replace(LOGIN+'?reason=access_revoked');return}
+    }
+  }catch(e){console.warn('[Portal security] Access verification temporarily unavailable',e)}
+  finally{accessCheckBusy=false}
+}
+setInterval(verifyActivePortalAccess,ACCESS_CHECK_MS);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)verifyActivePortalAccess()});
+window.addEventListener('focus',verifyActivePortalAccess);
 
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 window.S4UPortalSecurity={touch:()=>touch(true),logout,remaining:()=>Math.max(0,LIMIT-(Date.now()-last))};
