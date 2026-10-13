@@ -573,13 +573,13 @@ body[data-portal-page="how-to-guides"] .howto-card .btn{margin-top:auto}
 
 /* Consistent portal typography, 2026-10-13.
    Body copy and utility text share one readable size; headings retain hierarchy. */
-:root{--portal-font-root:14px;--portal-body-size:14px}
+:root{--portal-font-root:14px;--portal-body-size:var(--portal-font-root)}
 html,body{font-size:var(--portal-body-size);line-height:1.5}
 .nav a,.crumb,.pill,.signout,.btn,.metric small,.metric span,
 .panel-head p,th,td,td small,.badge,.card span,.card strong,
 .hero p,.hero-kicker,.nav-title,.side-foot,.font-sizer button,
 .font-sizer .font-reset,.howto-kicker,.howto-meta,.welcome-actions span,
-small,label,input,select,textarea,button{font-size:14px}
+small,label,input,select,textarea,button{font-size:var(--portal-font-root)}
 .metric strong{font-size:24px;line-height:1.25}
 .hero h1{font-size:28px;line-height:1.2}
 .panel-head h2,.panel-head h3,.howto-card h3{font-size:18px;line-height:1.3}
