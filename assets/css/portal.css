@@ -570,3 +570,19 @@ body[data-portal-page="how-to-guides"] .howto-card{width:auto;min-height:190px;p
 body[data-portal-page="how-to-guides"] .howto-card .btn{margin-top:auto}
 @media(max-width:900px){body[data-portal-page="how-to-guides"] .howto-grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}}
 @media(max-width:620px){body[data-portal-page="how-to-guides"] .howto-section{padding:16px}body[data-portal-page="how-to-guides"] .howto-section>.panel-head{margin-bottom:14px}body[data-portal-page="how-to-guides"] .howto-grid{grid-template-columns:1fr;gap:12px}body[data-portal-page="how-to-guides"] .howto-card{min-height:0}}
+
+/* Consistent portal typography, 2026-10-13.
+   Body copy and utility text share one readable size; headings retain hierarchy. */
+:root{--portal-font-root:14px;--portal-body-size:14px}
+html,body{font-size:var(--portal-body-size);line-height:1.5}
+.nav a,.crumb,.pill,.signout,.btn,.metric small,.metric span,
+.panel-head p,th,td,td small,.badge,.card span,.card strong,
+.hero p,.hero-kicker,.nav-title,.side-foot,.font-sizer button,
+.font-sizer .font-reset,.howto-kicker,.howto-meta,.welcome-actions span,
+small,label,input,select,textarea,button{font-size:14px}
+.metric strong{font-size:24px;line-height:1.25}
+.hero h1{font-size:28px;line-height:1.2}
+.panel-head h2,.panel-head h3,.howto-card h3{font-size:18px;line-height:1.3}
+.hero p,.metric span,.card span,.panel-head p,td small{line-height:1.5}
+.nav-title,.hero-kicker,.howto-kicker{letter-spacing:.06em}
+@media(max-width:620px){.hero h1{font-size:25px}}
