@@ -10,7 +10,7 @@ if(localStorage.getItem('s4u_workforce_storage_schema')!==STORAGE_SCHEMA){
 }
 const auth=window.S4UAuth;
 const FONT_KEY='s4u_employer_nondot_font_size_v2';
-const FONT_DEFAULT=13,FONT_MIN=12,FONT_MAX=18;
+const FONT_DEFAULT=14,FONT_MIN=12,FONT_MAX=18;
 function readFontSize(){const n=Number(localStorage.getItem(FONT_KEY));return Number.isFinite(n)?Math.min(FONT_MAX,Math.max(FONT_MIN,n)):FONT_DEFAULT}
 function applyFontSize(n){const v=Math.min(FONT_MAX,Math.max(FONT_MIN,Number(n)||FONT_DEFAULT));document.documentElement.style.setProperty('--portal-font-root',v+'px');localStorage.setItem(FONT_KEY,String(v));const label=document.getElementById('fontSizeValue');if(label)label.textContent=v===FONT_DEFAULT?'Default':String(v);return v}
 let portalFontSize=readFontSize();applyFontSize(portalFontSize);
