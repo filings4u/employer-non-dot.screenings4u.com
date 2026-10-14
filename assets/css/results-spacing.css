@@ -1,0 +1,20 @@
+/* Employer NON-DOT Results page only — preserve shared shell */
+body[data-portal-page="results"] .content{padding:28px 30px 44px;max-width:1540px}
+body[data-portal-page="results"] .hero{padding:30px 34px;min-height:150px;margin-bottom:26px}
+body[data-portal-page="results"] #content{display:flex;flex-direction:column;gap:24px}
+body[data-portal-page="results"] #content>.panel,
+body[data-portal-page="results"] #content>.workflow-panel{margin:0;border-radius:15px;overflow:hidden}
+body[data-portal-page="results"] #content>.panel>.panel-head,
+body[data-portal-page="results"] #content>.workflow-panel>.panel-head{padding:23px 26px;min-height:82px}
+body[data-portal-page="results"] #content .panel-head h2{font-size:16px;line-height:1.4}
+body[data-portal-page="results"] #content .panel-head p{font-size:12px;line-height:1.6;margin-top:6px}
+body[data-portal-page="results"] #content .table-wrap th{padding:16px 18px;font-size:11px;white-space:nowrap}
+body[data-portal-page="results"] #content .table-wrap td{padding:17px 18px;font-size:12px;line-height:1.6}
+body[data-portal-page="results"] #content .results-stage-strip{gap:12px;padding:23px 25px}
+body[data-portal-page="results"] #content .results-stage{border:1px solid #dbe4ed;border-radius:11px;padding:18px 14px;min-height:78px;gap:12px}
+body[data-portal-page="results"] #content .results-stage strong{line-height:1.45}
+body[data-portal-page="results"] #content .results-stage small{display:block;margin-top:6px;line-height:1.35}
+body[data-portal-page="results"] #content .btn{min-height:36px}
+body[data-portal-page="results"] #content>div[style*="height:14px"]{display:none}
+@media(max-width:1150px){body[data-portal-page="results"] #content .results-stage-strip{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){body[data-portal-page="results"] .content{padding:18px 14px 30px}body[data-portal-page="results"] .hero{padding:23px 20px;margin-bottom:20px}body[data-portal-page="results"] #content{gap:18px}body[data-portal-page="results"] #content .panel-head{padding:18px}body[data-portal-page="results"] #content .results-stage-strip{grid-template-columns:1fr;gap:10px;padding:15px}body[data-portal-page="results"] #content .table-wrap th,body[data-portal-page="results"] #content .table-wrap td{padding:13px 14px}}
