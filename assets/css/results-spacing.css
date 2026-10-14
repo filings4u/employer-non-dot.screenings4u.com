@@ -18,3 +18,15 @@ body[data-portal-page="results"] #content .btn{min-height:36px}
 body[data-portal-page="results"] #content>div[style*="height:14px"]{display:none}
 @media(max-width:1150px){body[data-portal-page="results"] #content .results-stage-strip{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:760px){body[data-portal-page="results"] .content{padding:18px 14px 30px}body[data-portal-page="results"] .hero{padding:23px 20px;margin-bottom:20px}body[data-portal-page="results"] #content{gap:18px}body[data-portal-page="results"] #content .panel-head{padding:18px}body[data-portal-page="results"] #content .results-stage-strip{grid-template-columns:1fr;gap:10px;padding:15px}body[data-portal-page="results"] #content .table-wrap th,body[data-portal-page="results"] #content .table-wrap td{padding:13px 14px}}
+
+/* Donor-driven workflow, interactive stage cards */
+body[data-portal-page="results"] #content .results-stage{display:flex;align-items:center;text-align:left;width:100%;font:inherit;color:inherit;background:#fff;cursor:pointer;transition:background .15s,border-color .15s,box-shadow .15s}
+body[data-portal-page="results"] #content .results-stage:hover,body[data-portal-page="results"] #content .results-stage:focus-visible{background:#f2f7fd;border-color:#6f9bd3;box-shadow:0 0 0 2px #dbe9fa;outline:none}
+body[data-portal-page="results"] #content .results-stage.active{background:#edf5ff;border-color:#265793}
+body[data-portal-page="results"] #content .results-stage-strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:stretch}
+body[data-portal-page="results"] #content .panel-head label{display:flex;align-items:center;gap:10px;white-space:nowrap}
+body[data-portal-page="results"] #content .panel-head select{min-width:160px;padding:9px 11px;border:1px solid #c4d3e4;border-radius:8px;background:#fff}
+body[data-portal-page="results"] #content .table-wrap td:last-child{white-space:nowrap}
+body[data-portal-page="results"] #content .table-wrap td .btn{margin-right:7px}
+@media(max-width:1150px){body[data-portal-page="results"] #content .results-stage-strip{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){body[data-portal-page="results"] #content .results-stage-strip{grid-template-columns:1fr}body[data-portal-page="results"] #content .panel-head{flex-wrap:wrap;gap:14px}}
