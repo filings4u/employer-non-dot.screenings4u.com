@@ -770,21 +770,7 @@ function resultStatus(record){
 function resultButtons(r){
   return `<button class="btn ghost" style="padding:6px 9px" data-result-view="${esc(r.id)}" type="button">View</button><button class="btn primary" style="padding:6px 9px" data-result-download="${esc(r.id)}" type="button" ${r.download_ready?'':'disabled title="PDF becomes available when the result is completed"'}>Download PDF</button>`;
 }
-function renderResultsIndex(){
-  const rows=Array.isArray(data?.results)?data.results:[];
-  const cols=[
-    ['Order',['order_number']],
-    ['Person',['employee.first_name'],(_,r)=>esc(personName(r.employee||{}))],
-    ['Service',['charge.service_name','testing_panel']],
-    ['Result',['result.final_status'],(_,r)=>resultStatus(r)],
-    ['Workflow',['workflow_label'],(_,r)=>resultWorkflow(r)],
-    ['Updated',['result.finalized_at','result.updated_at','updated_at','created_at'],v=>fmt(v)]
-  ];
-  const stageCounts=[0,0,0,0,0];
-  for(const r of rows){const step=Math.max(1,Math.min(5,Number(r.workflow_step||testingWorkflowStep(r.status))));stageCounts[step-1]++}
-  const pipeline=`<div class="panel workflow-panel results-workflow-panel"><div class="panel-head"><div><h2>Live Results Workflow</h2><p>Each testing order advances through these stages as collection, laboratory, MRO, and final-result activity is completed.</p></div></div><div class="results-stage-strip">${['Ordered','Processing','At Lab','MRO Confirmation','Completed'].map((label,i)=>`<div class="results-stage"><span>${i+1}</span><div><strong>${esc(label)}</strong><small>${stageCounts[i]} order${stageCounts[i]===1?'':'s'}</small></div></div>`).join('')}</div></div>`;
-  return `${pipeline}<div style="height:14px"></div>${table('NON-DOT Testing Results & Status',rows,cols,resultButtons)}`;
-}
+function renderResultsIndex(){return '<div class="panel workflow-panel results-workflow-panel"><div class="panel-head"><div><h2>Live Results Workflow</h2><p>Published donor records by testing stage. Select a stage to filter the donor table.</p></div></div><div class="results-stage-strip" id="mroWorkflowCards">'+['Ordered','Processing','At Lab','MRO Confirmation','Completed'].map((label,i)=>'<button type="button" class="results-stage" data-mro-stage="'+label+'"><span>'+(i+1)+'</span><div><strong>'+label+'</strong><small data-count="'+label+'">0 donors</small></div></button>').join('')+'</div></div>'}
 function primitivePayload(payload){
   if(!payload||typeof payload!=='object')return [];
   return Object.entries(payload).filter(([k,v])=>['string','number','boolean'].includes(typeof v)&&v!==''&&v!==null).slice(0,24);
@@ -1029,7 +1015,7 @@ const td=document.createElement('td');const view=document.createElement('button'
 view.onclick=async()=>{try{const data=await documentLink(r,false);const overlay=document.createElement('div');overlay.style.cssText='position:fixed;inset:0;background:#001d3dbb;display:grid;place-items:center;z-index:99999;padding:18px';const panel=document.createElement('div');panel.style.cssText='background:white;width:min(900px,100%);height:min(85vh,750px);padding:18px;border-radius:12px;display:flex;flex-direction:column;gap:12px';const heading=document.createElement('strong');heading.textContent=r.donor_name;const close=document.createElement('button');close.className='btn';close.textContent='Close';close.onclick=()=>overlay.remove();const frame=document.createElement('iframe');frame.title='Official MRO PDF';frame.src=data.url;frame.style.cssText='flex:1;width:100%;border:1px solid #dce5ef';panel.append(heading,close,frame);overlay.append(panel);document.body.append(overlay)}catch(e){notice(e.message||'Document unavailable')}};
 download.onclick=async()=>{try{const data=await documentLink(r,true);window.open(data.url,'_blank','noopener')}catch(e){notice(e.message||'Document unavailable')}};
 td.append(view,document.createTextNode(' '),download);tr.append(td);tbody.append(tr)}}
-section.querySelector('#mroStageFilter').onchange=show;show()
+const stageCards=document.querySelectorAll('[data-mro-stage]');for(const card of stageCards){const stage=card.dataset.mroStage;const count=records.filter(r=>(r.workflow_stage||'Ordered')===stage).length;const number=card.querySelector('[data-count]');if(number)number.textContent=count+' donor'+(count===1?'':'s');card.onclick=()=>{section.querySelector('#mroStageFilter').value=stage;show();section.scrollIntoView({behavior:'smooth',block:'start'})}}section.querySelector('#mroStageFilter').onchange=show;show()
 }catch(e){message(e.message||'Unable to load donor results')}
 }
 function renderCurrent(){
