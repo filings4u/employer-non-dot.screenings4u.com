@@ -30,3 +30,5 @@ body[data-portal-page="results"] #content .table-wrap td:last-child{white-space:
 body[data-portal-page="results"] #content .table-wrap td .btn{margin-right:7px}
 @media(max-width:1150px){body[data-portal-page="results"] #content .results-stage-strip{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:760px){body[data-portal-page="results"] #content .results-stage-strip{grid-template-columns:1fr}body[data-portal-page="results"] #content .panel-head{flex-wrap:wrap;gap:14px}}
+
+body[data-portal-page="results"] #content .results-stage-strip{grid-template-columns:repeat(4,minmax(0,1fr))}
