@@ -61,8 +61,9 @@ async function invoke(name,body={}){
   }
   const d=await r.json().catch(()=>({}));
   if(r.status===401){
-    try{await auth.signOut()}catch{}
-    throw new Error('Your session has expired. Please sign in again.');
+    // A page endpoint can deny access even while Supabase authentication is valid.
+    // Do not destroy the user's session for an endpoint-specific 401 response.
+    throw new Error('Access to this page was denied (401). Your login session has been preserved. Contact support if this continues.');
   }
   if(!r.ok||d.error)throw new Error(d.error||d.reason||`Request failed (${r.status}).`);
   return d;
@@ -1145,7 +1146,9 @@ async function boot(){
     setTimeout(async()=>{try{const freshBrand=await loadBranding();if(freshBrand){brandState=freshBrand;jsonSet(localStorage,BRAND_CACHE,brandState);markValidated(BRAND_CHECK_KEY);applyBranding()}}catch{}},0);
   }catch(err){
     const msg=String(err?.message||err||'');
-    if(/unauthorized|session|jwt|sign in/i.test(msg)){location.replace('https://portal.screenings4u.com/');return}
+    // Never redirect based on a substring in an API error message.
+    // Authorization errors must remain visible instead of triggering a login loop.
+    if(msg==='Your session has expired. Please sign in again.'){location.replace('https://portal.screenings4u.com/');return}
     clearTimeout(timer);document.body.className='';
     document.body.innerHTML=`<main class="login-page"><section class="login-card"><img class="login-logo" src="/images/logo.png" alt="screenings4u"><h1>Portal unavailable</h1><p>${esc(msg||'This NON-DOT Workforce portal could not be loaded.')}</p><a class="btn primary" href="/login.html">Return to sign in</a></section></main>`;
   }
