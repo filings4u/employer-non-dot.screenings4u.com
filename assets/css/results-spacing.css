@@ -32,3 +32,11 @@ body[data-portal-page="results"] #content .table-wrap td .btn{margin-right:7px}
 @media(max-width:760px){body[data-portal-page="results"] #content .results-stage-strip{grid-template-columns:1fr}body[data-portal-page="results"] #content .panel-head{flex-wrap:wrap;gap:14px}}
 
 body[data-portal-page="results"] #content .results-stage-strip{grid-template-columns:repeat(4,minmax(0,1fr))}
+
+/* Results-only surface: white background matching the portal cards; preserve workflow, navigation and controls. */
+html:has(body[data-portal-page="results"]),
+body[data-portal-page="results"],
+body[data-portal-page="results"] .app,
+body[data-portal-page="results"] .main,
+body[data-portal-page="results"] .content,
+body[data-portal-page="results"] #content{background-color:#fff!important}
